@@ -1,5 +1,4 @@
-﻿using _esportes.Menus;
-using _esportes.Modelos;
+﻿using _esportes.Modelos;
 using System.ComponentModel.Design;
 
 Dictionary<string, Aluno> alunosRegistrados = new();
@@ -43,30 +42,17 @@ turmasRegistradas.Add(turma2.ID, turma2);
 turmasRegistradas.Add(turma3.ID, turma3);
 
 
-List<Aluno> A = new();
-A.Add(aluno1);
-A.Add(aluno2);
-A.Add(aluno3);
+turma1.AlunosRegistrados.Add(aluno1);
+turma1.AlunosRegistrados.Add(aluno2);
+turma1.AlunosRegistrados.Add(aluno3);
 
-List<Aluno> B = new();
-B.Add(aluno7);
-B.Add(aluno8);
-B.Add(aluno9);
+turma2.AlunosRegistrados.Add(aluno7);
+turma2.AlunosRegistrados.Add(aluno8);
+turma2.AlunosRegistrados.Add(aluno9);
 
-List<Aluno> C = new();
-C.Add(aluno4);
-C.Add(aluno5);
-C.Add(aluno6);
-
-
-//Dictionary<int, Menus> opcoes = new();
-//opcoes.Add(1, new MenuCadastrarAluno());
-//opcoes.Add(2, new MenuCadastrarProfessor());
-//opcoes.Add(3, new MenuCadastrarTurma());
-//opcoes.Add(4, new MenuConsultarAluno());
-//opcoes.Add(5, new MenuConsultarProfessor());
-//opcoes.Add(6, new MenuConsultarTurma());
-//opcoes.Add(-1, new MenuSair());
+turma3.AlunosRegistrados.Add(aluno4);
+turma3.AlunosRegistrados.Add(aluno5);
+turma3.AlunosRegistrados.Add(aluno6);
 
 
 ExibirOpcoesDoMenu();
@@ -97,16 +83,15 @@ void CadastrarAluno()
     }
 
     Aluno aluno = new Aluno(nome, idade, email, endereco, turma);
-    alunosRegistrados.Add(nome, aluno);
-    if (turma == "A")
+
+    foreach (Turma t in turmasRegistradas.Values)
     {
-        A.Add(aluno);
-    } if (turma == "B") {
-        B.Add(aluno);
-    } if (turma == "C")
-    {
-        C.Add(aluno);
+    if ( t.ID == turma )
+        {
+            t.AlunosRegistrados.Add(aluno);
+        }
     }
+
 
     Thread.Sleep(4000);
     Console.Clear();
@@ -148,8 +133,7 @@ void CadastrarTurma()
         Thread.Sleep(4000);
         Console.Clear();
         ExibirOpcoesDoMenu();
-    } else
-    {
+    } else {
     Console.WriteLine("Digite a modalidade da turma: ");
     string modalidade = Console.ReadLine()!;
 
@@ -213,36 +197,20 @@ void ConsultarTurmas()
 
     if (turmasRegistradas.ContainsKey(ID))
     {   
-        if (ID == "A") {
-        Console.WriteLine($"Essa turma tem {A.Count} alunos.\n");
-        turmasRegistradas[ID].ExibirDetalhes();
-        foreach (Aluno aluno in A)
+        foreach (Turma turma in turmasRegistradas.Values)
         {
-        Console.WriteLine($"{aluno.Nome}");
-        }
-
-    } if (ID == "B") {
-        Console.WriteLine($"Essa turma tem {B.Count} alunos.\n");
-        turmasRegistradas[ID].ExibirDetalhes();
-        foreach (Aluno aluno in B)
-        {
-        Console.WriteLine($"{aluno.Nome}");
-        }
-    } if (ID == "C") {
-        Console.WriteLine($"Essa turma tem {C.Count} alunos.\n");
-        turmasRegistradas[ID].ExibirDetalhes();
-        foreach (Aluno aluno in C)
-        {
-        Console.WriteLine($"{aluno.Nome}");
-        }
-    } if (turmasRegistradas.ContainsKey(ID)){
-            Console.WriteLine($"Essa turma tem {D.Count} alunos.\n");
-            turmasRegistradas[ID].ExibirDetalhes();
-            foreach (Aluno aluno in D)
+            if (ID == turma.ID)
             {
-                Console.WriteLine($"{aluno.Nome}");
+            Console.WriteLine($"Essa turma tem {turma.AlunosRegistrados.Count} alunos.\n");
+            turma.ExibirDetalhes();
+            foreach (Aluno aluno in turma.AlunosRegistrados)
+            {
+            Console.WriteLine($"{aluno.Nome}");
+            }
+
             }
         }
+
     } else {
         Console.WriteLine("Turma não encontrada!");
         ExibirOpcoesDoMenu();

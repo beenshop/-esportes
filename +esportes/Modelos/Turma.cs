@@ -16,6 +16,8 @@ class Turma
 
     }
 
+    public List<Aluno> AlunosRegistrados = new();
+
     public void ExibirDetalhes()
     {
 
