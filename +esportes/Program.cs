@@ -95,46 +95,5 @@ void ExibirOpcoesDoMenu()
     }
 }
 
-//switch (opcaoEscolhidaNumerica)
-//{
-//    case 1:
-//        MenuCadastrarAluno menu1 = new();
-//        menu1.Executar(turmasRegistradas, alunosRegistrados);
-//        ExibirOpcoesDoMenu();
-//        break;
-//    case 2:
-//        MenuCadastrarProfessor menu2 = new();
-//        menu2.Executar(professoresRegistrados);
-//        ExibirOpcoesDoMenu();
-//        break;
-//    case 3:
-//        MenuCadastrarTurma menu3 = new();
-//        menu3.Executar(turmasRegistradas);
-//        ExibirOpcoesDoMenu();
-//        break;
-//    case 4:
-//        MenuConsultarAluno menu4 = new();
-//        menu4.Executar(alunosRegistrados);
-//        ExibirOpcoesDoMenu();
-//        break;
-//    case 5:
-//        MenuConsultarProfessor menu5 = new();
-//        menu5.Executar(professoresRegistrados);
-//        ExibirOpcoesDoMenu();
-//        break;
-//    case 6:
-//        MenuConsultarTurmas menu6 = new();
-//        menu6.Executar(turmasRegistradas);
-//        ExibirOpcoesDoMenu();
-//        break;
-//    case 7:
-//        MenuSair menu7 = new();
-//        menu7.Executar();
-//        break;
-//    default:
-//        Console.WriteLine("Opção inválida.");
-//        break;
-//}
-
 
 
