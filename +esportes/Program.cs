@@ -1,5 +1,5 @@
-﻿using _esportes.Modelos;
-using System.ComponentModel.Design;
+﻿using _esportes.Menus;
+using _esportes.Modelos;
 
 Dictionary<string, Aluno> alunosRegistrados = new();
 Aluno aluno1 = new Aluno("David", 15, "email1@email.com", "Rua ZZZ-XXX", "A");
@@ -21,8 +21,6 @@ alunosRegistrados.Add(aluno6.Nome, aluno6);
 alunosRegistrados.Add(aluno7.Nome, aluno7);
 alunosRegistrados.Add(aluno8.Nome, aluno8);
 alunosRegistrados.Add(aluno9.Nome, aluno9);
-
-
 
 Dictionary<string, Professor> professoresRegistrados = new();
 Professor professor1 = new Professor("César", 35, "professor@email.com", "Rua XXX-ZZZ", "A e B");
@@ -54,220 +52,89 @@ turma3.AlunosRegistrados.Add(aluno4);
 turma3.AlunosRegistrados.Add(aluno5);
 turma3.AlunosRegistrados.Add(aluno6);
 
+Dictionary<int, Menu> opcoes = new();
+opcoes.Add(1, new MenuCadastrarAluno());
+opcoes.Add(2, new MenuCadastrarProfessor());
+opcoes.Add(3, new MenuCadastrarTurma());
+opcoes.Add(4, new MenuConsultarAluno());
+opcoes.Add(5, new MenuConsultarProfessor());
+opcoes.Add(6, new MenuConsultarTurmas());
+opcoes.Add(7, new MenuSair());
 
 ExibirOpcoesDoMenu();
 
-void CadastrarAluno()
-{
-    Console.WriteLine("Digite o nome do aluno: ");
-    string nome = Console.ReadLine()!;
-
-    Console.WriteLine("Digite a idade do aluno: ");
-    int idade = Convert.ToInt32(Console.ReadLine())!;
-
-    Console.WriteLine("Digite o e-mail do aluno: ");
-    string email = Console.ReadLine()!;
-
-    Console.WriteLine("Digite o endereço do aluno: ");
-    string endereco = Console.ReadLine()!;
-
-    Console.WriteLine("Digite a turma que o aluno irá entrar: ");
-    string turma = Console.ReadLine()!;
-    if (turmasRegistradas.ContainsKey(turma))
-    {
-        Console.WriteLine("Aluno adicionado com sucesso.");
-    } else
-    {
-        Console.WriteLine("Turma não encontrada!");
-        return;
-    }
-
-    Aluno aluno = new Aluno(nome, idade, email, endereco, turma);
-
-    foreach (Turma t in turmasRegistradas.Values)
-    {
-    if ( t.ID == turma )
-        {
-            t.AlunosRegistrados.Add(aluno);
-        }
-    }
-
-
-    Thread.Sleep(4000);
-    Console.Clear();
-    ExibirOpcoesDoMenu();
-}
-
-void CadastrarProfessor()
-{
-    Console.WriteLine("Digite o nome do professor: ");
-    string nome = Console.ReadLine()!;
-
-    Console.WriteLine("Digite a idade do professor: ");
-    int idade = Convert.ToInt32(Console.ReadLine())!;
-
-    Console.WriteLine("Digite o e-mail do professor: ");
-    string email = Console.ReadLine()!;
-
-    Console.WriteLine("Digite o endereço do professor: ");
-    string endereco = Console.ReadLine()!;
-
-    Console.WriteLine("Digite as turma que o professor irá lecionar: ");
-    string turma = Console.ReadLine()!;
-
-    Professor professor = new Professor(nome, idade, email, endereco, turma);
-    professoresRegistrados.Add(nome, professor);
-
-    Console.WriteLine("Professor adicionado com sucesso.");
-    Thread.Sleep(4000);
-    Console.Clear();
-    ExibirOpcoesDoMenu();
-}
-
-void CadastrarTurma()
-{
-    Console.WriteLine("Digite o ID da turma: ");
-    string id = Console.ReadLine()!;
-    if (turmasRegistradas.ContainsKey(id)) {
-        Console.WriteLine("Já existe uma turma com essa ID!");
-        Thread.Sleep(4000);
-        Console.Clear();
-        ExibirOpcoesDoMenu();
-    } else {
-    Console.WriteLine("Digite a modalidade da turma: ");
-    string modalidade = Console.ReadLine()!;
-
-    Console.WriteLine("Digite o nome do professor: ");
-    string professor = Console.ReadLine()!;
-
-    Console.WriteLine("Digite o horário da aula: ");
-    string horario = Console.ReadLine()!;
-
-    Turma turma = new Turma(id, modalidade, professor, horario);
-    turmasRegistradas.Add(id, turma);
-
-    Console.WriteLine("Turma registrada com sucesso.");
-    Thread.Sleep(4000);
-    Console.Clear();
-    ExibirOpcoesDoMenu();
-    }
-
-}
-
-void ConsultarAluno()
-    {
-        Console.WriteLine("Digite o nome do aluno: ");
-        string nome = Console.ReadLine()!;
-
-        if (alunosRegistrados.ContainsKey(nome))
-        {
-            alunosRegistrados[nome].ExibirDetalhes();
-        }
-        else
-        {
-            Console.WriteLine("Aluno não encontrado!");
-            ExibirOpcoesDoMenu();
-        }
-        ExibirOpcoesDoMenu();
-    }
-
-void ConsultarProfessor()
-    {
-        Console.WriteLine("Digite o nome do professor: ");
-        string nome = Console.ReadLine()!;
-
-        if (professoresRegistrados.ContainsKey(nome))
-        {
-            professoresRegistrados[nome].ExibirDetalhes();
-        }
-        else
-        {
-            Console.WriteLine("Professor não encontrado!");
-            ExibirOpcoesDoMenu();
-        }
-        Thread.Sleep(4000);
-        Console.Clear();
-        ExibirOpcoesDoMenu();
-    }
-
-void ConsultarTurmas()
-{
-    Console.WriteLine("Digite o ID da turma: ");
-    string ID = Console.ReadLine()!;
-
-    if (turmasRegistradas.ContainsKey(ID))
-    {   
-        foreach (Turma turma in turmasRegistradas.Values)
-        {
-            if (ID == turma.ID)
-            {
-            Console.WriteLine($"Essa turma tem {turma.AlunosRegistrados.Count} alunos.\n");
-            turma.ExibirDetalhes();
-            foreach (Aluno aluno in turma.AlunosRegistrados)
-            {
-            Console.WriteLine($"{aluno.Nome}");
-            }
-
-            }
-        }
-
-    } else {
-        Console.WriteLine("Turma não encontrada!");
-        ExibirOpcoesDoMenu();
-    }
-    
-
-    Thread.Sleep(4000);
-    Console.Clear();
-    ExibirOpcoesDoMenu();
-}
-
-void Sair()
-{
-    Console.WriteLine("Pressione qualquer tecla para fechar...");
-    Console.ReadKey();
-}
-
 void ExibirOpcoesDoMenu()
+{
+    Console.WriteLine("Selecione uma opção:");
+    Console.WriteLine("1 - Cadastrar Aluno");
+    Console.WriteLine("2 - Cadastrar Professor");
+    Console.WriteLine("3 - Cadastrar Turma");
+    Console.WriteLine("4 - Consulta de Aluno");
+    Console.WriteLine("5 - Consulta de Professor");
+    Console.WriteLine("6 - Consulta de Turmas");
+    Console.WriteLine("7 - Sair\n");
+
+    Console.Write("Digite a sua opção: ");
+    string opcaoEscolhida = Console.ReadLine()!;
+    int opcaoEscolhidaNumerica = Convert.ToInt32(opcaoEscolhida);
+
+    if (opcoes.ContainsKey(opcaoEscolhidaNumerica) && opcaoEscolhidaNumerica != 7)
     {
-        Console.WriteLine("Selecione uma opção:");
-        Console.WriteLine("1 - Cadastrar Aluno");
-        Console.WriteLine("2 - Cadastrar Professor");
-        Console.WriteLine("3 - Cadastrar Turma");
-        Console.WriteLine("4 - Consulta de Aluno");
-        Console.WriteLine("5 - Consulta de Professor");
-        Console.WriteLine("6 - Consulta de Turmas");
-        Console.WriteLine("7 - Sair\n");
-
-        int opcao = Convert.ToInt32(Console.ReadLine());
-
-        switch (opcao)
-        {
-            case 1:
-                CadastrarAluno();
-                break;
-            case 2:
-                CadastrarProfessor();
-                break;
-            case 3:
-                CadastrarTurma();
-                break;
-            case 4:
-                ConsultarAluno();
-                break;
-            case 5:
-                ConsultarProfessor();
-                break;
-            case 6:
-                ConsultarTurmas();
-            break;
-            case 7:
-                Sair();
-                break;
-            default:
-            Console.WriteLine("Opção inválida.");
-            break;
+        Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
+        menuASerExibido.Executar(turmasRegistradas, alunosRegistrados, professoresRegistrados);
+        ExibirOpcoesDoMenu();
+    }
+    else if (opcaoEscolhidaNumerica == 7)
+    {
+        Menu menuASerExibido = opcoes[opcaoEscolhidaNumerica];
+        menuASerExibido.Executar(turmasRegistradas, alunosRegistrados, professoresRegistrados);
+    }
+    else
+    {
+        Console.WriteLine("Opção inválida.");
     }
 }
+
+//switch (opcaoEscolhidaNumerica)
+//{
+//    case 1:
+//        MenuCadastrarAluno menu1 = new();
+//        menu1.Executar(turmasRegistradas, alunosRegistrados);
+//        ExibirOpcoesDoMenu();
+//        break;
+//    case 2:
+//        MenuCadastrarProfessor menu2 = new();
+//        menu2.Executar(professoresRegistrados);
+//        ExibirOpcoesDoMenu();
+//        break;
+//    case 3:
+//        MenuCadastrarTurma menu3 = new();
+//        menu3.Executar(turmasRegistradas);
+//        ExibirOpcoesDoMenu();
+//        break;
+//    case 4:
+//        MenuConsultarAluno menu4 = new();
+//        menu4.Executar(alunosRegistrados);
+//        ExibirOpcoesDoMenu();
+//        break;
+//    case 5:
+//        MenuConsultarProfessor menu5 = new();
+//        menu5.Executar(professoresRegistrados);
+//        ExibirOpcoesDoMenu();
+//        break;
+//    case 6:
+//        MenuConsultarTurmas menu6 = new();
+//        menu6.Executar(turmasRegistradas);
+//        ExibirOpcoesDoMenu();
+//        break;
+//    case 7:
+//        MenuSair menu7 = new();
+//        menu7.Executar();
+//        break;
+//    default:
+//        Console.WriteLine("Opção inválida.");
+//        break;
+//}
+
 
 
