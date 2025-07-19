@@ -1,4 +1,5 @@
-﻿using _esportes.Modelos;
+﻿using _esportes.Banco;
+using _esportes.Modelos;
 
 namespace _esportes.Menus;
 
@@ -13,7 +14,7 @@ class Menu
         Console.WriteLine(asteriscos + "\n");
     }
 
-    public virtual void Executar(Dictionary<string, Turma> turmasRegistradas, Dictionary<string, Aluno> alunosRegistrados, Dictionary<string, Professor> professoresRegistrados)
+    public virtual void Executar(AlunoDAL alunoDAL, ProfessorDAL professorDAL, TurmaDAL turmaDAL)
     {
         Console.Clear();
     }

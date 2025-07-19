@@ -2,31 +2,28 @@
 
 class Turma
 {
-    public string ID { get; set; }
+    public int Id { get; set; }
     public string Modalidade { get; set; }
     public string Professor { get; set; }
     public string Horario { get; set; }
+    public string Letra { get; set; }
     
-    public Turma(string id, string modalidade, string professor, string horario)
+    public Turma(string modalidade, string professor, string horario, string letra)
     {
-        ID = id;
         Modalidade = modalidade;
         Professor = professor;
         Horario = horario;
-
+        Letra = letra;
     }
 
     public List<Aluno> AlunosRegistrados = new();
 
     public void ExibirDetalhes()
     {
-
-        Console.WriteLine("Turma: " + ID);
+        Console.WriteLine("Turma: " + Letra);
         Console.WriteLine("Modalidade: " + Modalidade);
         Console.WriteLine("Professor: " + Professor);
         Console.WriteLine("Horário: " + Horario);
         Console.WriteLine("----------------------\n");
-        
-
     }
 }

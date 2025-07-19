@@ -2,6 +2,7 @@
 
 class Professor
 {
+    public int Id { get; set; }
     public string Nome { get; set; }
     public int Idade { get; set; }
     public string Email { get; set; }
@@ -25,7 +26,7 @@ class Professor
         Console.WriteLine("E-mail: " + Email);
         Console.WriteLine("Endereço: " + Endereco);
         Console.WriteLine("Turmas: " + Turmas);
-        Console.WriteLine("----------------------\n");
+        Console.WriteLine("\n----------------------\n");
 
     }
 }

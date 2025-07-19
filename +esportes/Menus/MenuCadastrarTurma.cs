@@ -1,20 +1,22 @@
-﻿using _esportes.Modelos;
+﻿using _esportes.Banco;
+using _esportes.Modelos;
 using System;
 
 namespace _esportes.Menus;
 
 class MenuCadastrarTurma : Menu
 {
-    public override void Executar(Dictionary<string, Turma> turmasRegistradas, Dictionary<string, Aluno> alunosRegistrados, Dictionary<string, Professor> professoresRegistrados)
+    public override void Executar(AlunoDAL alunoDAL, ProfessorDAL professorDAL, TurmaDAL turmaDAL)
     {
-        base.Executar(turmasRegistradas, alunosRegistrados, professoresRegistrados);
+        base.Executar(alunoDAL, professorDAL, turmaDAL);
         ExibirTituloDaOpcao("Cadastro de Turmas");
 
         Console.WriteLine("Digite o ID da turma: ");
-        string id = Console.ReadLine()!;
-        if (turmasRegistradas.ContainsKey(id))
+        string letra = Console.ReadLine()!;
+        var turmaRecuperada = turmaDAL.RecuperarPelaLetra(letra);
+        if (turmaRecuperada is not null)
         {
-            Console.WriteLine("Já existe uma turma com essa ID!");
+            Console.WriteLine("Já existe uma turma registrada com essa Letra!");
             Thread.Sleep(4000);
             Console.Clear();
             MenuCadastrarTurma menu = new();
@@ -30,8 +32,8 @@ class MenuCadastrarTurma : Menu
             Console.WriteLine("Digite o horário da aula: ");
             string horario = Console.ReadLine()!;
 
-            Turma turma = new Turma(id, modalidade, professor, horario);
-            turmasRegistradas.Add(id, turma);
+            Turma turma = new Turma(modalidade, professor, horario, letra);
+            turmaDAL.AdicionarTurma(turma);
 
             Console.WriteLine("Turma registrada com sucesso.");
             Thread.Sleep(4000);

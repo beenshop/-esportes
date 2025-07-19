@@ -1,12 +1,13 @@
-﻿using _esportes.Modelos;
+﻿using _esportes.Banco;
+using _esportes.Modelos;
 
 namespace _esportes.Menus;
 
 class MenuCadastrarProfessor : Menu
 {
-    public override void Executar(Dictionary<string, Turma> turmasRegistradas, Dictionary<string, Aluno> alunosRegistrados, Dictionary<string, Professor> professoresRegistrados)
+    public override void Executar(AlunoDAL alunoDAL, ProfessorDAL professorDAL, TurmaDAL turmaDAL)
     {
-        base.Executar(turmasRegistradas, alunosRegistrados, professoresRegistrados);
+        base.Executar(alunoDAL, professorDAL, turmaDAL);
         ExibirTituloDaOpcao("Cadastro de Professores");
 
         Console.WriteLine("Digite o nome do professor: ");
@@ -25,7 +26,7 @@ class MenuCadastrarProfessor : Menu
         string turma = Console.ReadLine()!;
 
         Professor professor = new Professor(nome, idade, email, endereco, turma);
-        professoresRegistrados.Add(nome, professor);
+        professorDAL.AdicionarProfessor(professor);
 
         Console.WriteLine("Professor adicionado com sucesso.");
         Thread.Sleep(4000);

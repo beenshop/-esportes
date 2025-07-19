@@ -1,19 +1,20 @@
-﻿using _esportes.Modelos;
+﻿using _esportes.Banco;
+using _esportes.Modelos;
 
 namespace _esportes.Menus;
 
 class MenuConsultarProfessor : Menu
 {
-    public override void Executar(Dictionary<string, Turma> turmasRegistradas, Dictionary<string, Aluno> alunosRegistrados, Dictionary<string, Professor> professoresRegistrados)
+    public override void Executar(AlunoDAL alunoDAL, ProfessorDAL professorDAL, TurmaDAL turmaDAL)
     {
-        base.Executar(turmasRegistradas, alunosRegistrados, professoresRegistrados);
+        base.Executar(alunoDAL, professorDAL, turmaDAL);
         ExibirTituloDaOpcao("Consulta de Professores");
         Console.WriteLine("Digite o nome do professor: ");
         string nome = Console.ReadLine()!;
-
-        if (professoresRegistrados.ContainsKey(nome))
+        var professorRecuperado = professorDAL.RecuperarPeloNome(nome);
+        if (professorRecuperado is not null)
         {
-            professoresRegistrados[nome].ExibirDetalhes();
+            professorRecuperado.ExibirDetalhes();
 }
         else
         {

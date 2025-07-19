@@ -1,14 +1,15 @@
-﻿using _esportes.Modelos;
+﻿using _esportes.Banco;
+using _esportes.Modelos;
 
 namespace _esportes.Menus;
 
 class MenuCadastrarAluno : Menu
 {
-    public override void Executar(Dictionary<string, Turma> turmasRegistradas, Dictionary<string, Aluno> alunosRegistrados, Dictionary<string, Professor> professoresRegistrados)
+    public override void Executar(AlunoDAL alunoDAL, ProfessorDAL professorDAL, TurmaDAL turmaDAL)
     {
-        base.Executar(turmasRegistradas, alunosRegistrados, professoresRegistrados);
+        base.Executar(alunoDAL, professorDAL, turmaDAL);
         ExibirTituloDaOpcao("Cadastro de Alunos");
-        
+
         Console.WriteLine("Digite o nome do aluno: ");
         string nome = Console.ReadLine()!;
 
@@ -23,9 +24,13 @@ class MenuCadastrarAluno : Menu
 
         Console.WriteLine("Digite a turma que o aluno irá entrar: ");
         string turma = Console.ReadLine()!;
-        if (turmasRegistradas.ContainsKey(turma))
+        var turmaRecuperada = turmaDAL.RecuperarPelaLetra(turma);
+
+        if (turmaRecuperada is not null)
         {
             Console.WriteLine("Aluno adicionado com sucesso.");
+            Aluno aluno = new Aluno(nome, idade, email, endereco, turma);
+            alunoDAL.AdicionarAluno(aluno);
         }
         else
         {
@@ -33,20 +38,19 @@ class MenuCadastrarAluno : Menu
             return;
         }
 
-        Aluno aluno = new Aluno(nome, idade, email, endereco, turma);
 
-        foreach (Turma t in turmasRegistradas.Values)
-        {
-            if (t.ID == turma)
-            {
-                t.AlunosRegistrados.Add(aluno);
-            }
-        }
+        //foreach (Turma t in turmasRegistradas.Values)
+        //{
+        //    if (t.ID == turma)
+        //    {
+        //        t.AlunosRegistrados.Add(aluno);
+        //    }
+        //}
 
 
         Thread.Sleep(4000);
         Console.Clear();
-        }
-        }
+    }
+}
 
 
